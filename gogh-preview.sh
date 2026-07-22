@@ -20,7 +20,7 @@ while read -r PROPERTY_C VALUE REST; do
     esac
 done
 
-COLOR_NAMES=(
+declare -ra COLOR_NAMES=(
     ""
     "black *"
     "red ***"
@@ -45,15 +45,21 @@ color-print() {
         "$FG_R" "$FG_G" "$FG_B" "$BG_R" "$BG_G" "$BG_B" "$3"
 }
 
-BG="${THEME_COLORS[background]}"
-FG="${THEME_COLORS[foreground]}"
+color-println() {
+    color-print "$@"
+    echo
+}
 
-WIDTH=$((3 * (7 + 6 + 3)))
-printf -v CENTERED_NAME "%*s" $(((${#THEME_NAME} + WIDTH) / 2)) "$THEME_NAME"
+declare -r BG="${THEME_COLORS[background]}"
+declare -r FG="${THEME_COLORS[foreground]}"
 
-# TODO frames/decorations
-color-print "$FG" "$BG" "$CENTERED_NAME"
-echo
+printf -v BLANK "%48s" $WIDTH "" # 3 * (7 + 6 + 3)
+declare -r BLANK
+printf -v PADDED_NAME "'%s'%*s" "$THEME_NAME" $((29 - ${#THEME_NAME})) ""
+
+color-println "$FG" "$BG" "$BLANK"
+color-println "$FG" "$BG" " preview@gogh:~$ $PADDED_NAME"
+color-println "$FG" "$BG" "$BLANK"
 
 for ((i = 1; i <= 8; i++)); do
     printf -v PROPERTY "color_%02d" $i
@@ -67,6 +73,8 @@ for ((i = 1; i <= 8; i++)); do
     echo
 done
 
-color-print "${THEME_COLORS[foreground]}" "$BG" 'preview@gogh:~$ '
-color-print "${THEME_COLORS[cursor]}" "$BG" $'cursor \u2588      '
+color-println "$FG" "$BG" "$BLANK"
+color-print "${THEME_COLORS[foreground]}" "$BG" ' preview@gogh:~$ '
+color-print "${THEME_COLORS[cursor]}" "$BG" $'\u2588'"${BLANK:0:30}"
 echo
+color-println "$FG" "$BG" "$BLANK"
