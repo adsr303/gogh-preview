@@ -29,8 +29,13 @@ color-print() {
 }
 
 BG="${THEME_COLORS[background]}"
-for i in {01..16}; do
-    FG="${THEME_COLORS["color_${i}"]}"
+for ((i=1; i<=8; i++)); do
+    printf -v PROPERTY "color_%02d" $i
+    FG="${THEME_COLORS[$PROPERTY]}"
+    color-print "$FG" "$BG" " $i $FG "
+    color-print "$BG" "$FG" " $i $FG "
+    printf -v PROPERTY "color_%02d" $((i+8))
+    FG="${THEME_COLORS[$PROPERTY]}"
     color-print "$FG" "$BG" " $i $FG "
     echo
 done
