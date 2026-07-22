@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-#curl -s -L https://github.com/Gogh-Co/Gogh/raw/refs/heads/master/themes/Campbell.yml
-
-# Working with stdin for now
-
 declare -A THEME_COLORS
 
 while read -r PROPERTY_C VALUE REST; do
@@ -53,7 +49,7 @@ color-println() {
 declare -r BG="${THEME_COLORS[background]}"
 declare -r FG="${THEME_COLORS[foreground]}"
 
-printf -v BLANK "%48s" $WIDTH "" # 3 * (7 + 6 + 3)
+printf -v BLANK "%48s" "" # 3 * (7 + 6 + 3)
 declare -r BLANK
 printf -v PADDED_NAME "'%s'%*s" "$THEME_NAME" $((30 - ${#THEME_NAME})) ""
 
