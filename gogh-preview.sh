@@ -55,10 +55,10 @@ declare -r FG="${THEME_COLORS[foreground]}"
 
 printf -v BLANK "%48s" $WIDTH "" # 3 * (7 + 6 + 3)
 declare -r BLANK
-printf -v PADDED_NAME "'%s'%*s" "$THEME_NAME" $((29 - ${#THEME_NAME})) ""
+printf -v PADDED_NAME "'%s'%*s" "$THEME_NAME" $((30 - ${#THEME_NAME})) ""
 
 color-println "$FG" "$BG" "$BLANK"
-color-println "$FG" "$BG" " preview@gogh:~$ $PADDED_NAME"
+color-println "$FG" "$BG" " $ gogh-preview $PADDED_NAME"
 color-println "$FG" "$BG" "$BLANK"
 
 for ((i = 1; i <= 8; i++)); do
@@ -74,7 +74,7 @@ for ((i = 1; i <= 8; i++)); do
 done
 
 color-println "$FG" "$BG" "$BLANK"
-color-print "${THEME_COLORS[foreground]}" "$BG" ' preview@gogh:~$ '
-color-print "${THEME_COLORS[cursor]}" "$BG" $'\u2588'"${BLANK:0:30}"
+color-print "${THEME_COLORS[foreground]}" "$BG" ' $ '
+color-print "${THEME_COLORS[cursor]}" "$BG" $'\u2588'"${BLANK:0:44}"
 echo
 color-println "$FG" "$BG" "$BLANK"
