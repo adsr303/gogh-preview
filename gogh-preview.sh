@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
+set -eu
+
 declare -A THEME_COLORS
 
-while read -r PROPERTY_C VALUE REST; do
-  PROPERTY="${PROPERTY_C%:*}"
-  case "$PROPERTY" in
+while read -r property_c value rest; do
+  property="${property_c%:*}"
+  case "$property" in
     color_[01][0-9] | background | foreground | cursor)
-      THEME_COLORS+=(["$PROPERTY"]="${VALUE:2:6}")
+      THEME_COLORS+=(["$property"]="${value:2:6}")
       ;;
     name)
-      THEME_NAME="$VALUE ${REST[*]}" # Making a lot of assumptions here
+      THEME_NAME="$value ${rest[*]}" # Making a lot of assumptions here
       THEME_NAME="${THEME_NAME#*\'}"
       THEME_NAME="${THEME_NAME%\'*}"
       ;;
   esac
 done
+
+declare -r THEME_COLORS THEME_NAME
 
 declare -ra COLOR_NAMES=(
   ""
@@ -29,16 +33,16 @@ declare -ra COLOR_NAMES=(
 )
 
 color-print() {
-  local FG_R="0x${1:0:2}"
-  local FG_G="0x${1:2:2}"
-  local FG_B="0x${1:4:2}"
+  local fg_r="0x${1:0:2}"
+  local fg_g="0x${1:2:2}"
+  local fg_b="0x${1:4:2}"
 
-  local BG_R="0x${2:0:2}"
-  local BG_G="0x${2:2:2}"
-  local BG_B="0x${2:4:2}"
+  local bg_r="0x${2:0:2}"
+  local bg_g="0x${2:2:2}"
+  local bg_b="0x${2:4:2}"
 
   printf "\033[38;2;%d;%d;%d;48;2;%d;%d;%dm%s\033[0m" \
-    "$FG_R" "$FG_G" "$FG_B" "$BG_R" "$BG_G" "$BG_B" "$3"
+    "$fg_r" "$fg_g" "$fg_b" "$bg_r" "$bg_g" "$bg_b" "$3"
 }
 
 color-println() {
@@ -58,14 +62,14 @@ color-println "$FG" "$BG" " $ gogh-preview $PADDED_NAME"
 color-println "$FG" "$BG" "$BLANK"
 
 for ((i = 1; i <= 8; i++)); do
-  printf -v PROPERTY "color_%02d" $i
-  FG_T="${THEME_COLORS[$PROPERTY]}"
-  COLOR_NAME="${COLOR_NAMES[i]}"
-  color-print "$FG_T" "$BG" " $COLOR_NAME $FG_T "
-  color-print "$BG" "$FG_T" " $COLOR_NAME $FG_T "
-  printf -v PROPERTY "color_%02d" $((i + 8))
-  FG_T="${THEME_COLORS[$PROPERTY]}"
-  color-print "$FG_T" "$BG" " $COLOR_NAME $FG_T "
+  printf -v property "color_%02d" $i
+  fg_t="${THEME_COLORS[$property]}"
+  color_name="${COLOR_NAMES[i]}"
+  color-print "$fg_t" "$BG" " $color_name $fg_t "
+  color-print "$BG" "$fg_t" " $color_name $fg_t "
+  printf -v property "color_%02d" $((i + 8))
+  fg_t="${THEME_COLORS[$property]}"
+  color-print "$fg_t" "$BG" " $color_name $fg_t "
   echo
 done
 
