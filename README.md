@@ -11,3 +11,5 @@ gogh-preview.sh <'Adventure Time.yml'
 # browse and filter with preview
 ls *.yml | fzf --preview='yq {} | gogh-preview.sh'
 ```
+
+![Example screenshot](demo/demo.png)

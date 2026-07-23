@@ -1,0 +1,27 @@
+---
+name: 'RedPlus'
+author: 'adsr303'      # 'AUTHOR NAME (http://WEBSITE.com)'
+variant: 'dark'        # dark or light
+
+color_01: '#333333'    # Black (Host)
+color_02: '#AC0000'    # Red (Syntax string)
+color_03: '#99CC33'    # Green (Command)
+color_04: '#CC9933'    # Yellow (Command second)
+color_05: '#3399CC'    # Blue (Path)
+color_06: '#9933CC'    # Magenta (Syntax var)
+color_07: '#33CC99'    # Cyan (Prompt)
+color_08: '#CCCCCC'    # White
+
+color_09: '#767676'    # Bright Black
+color_10: '#E50000'    # Bright Red (Command error)
+color_11: '#BFFF40'    # Bright Green (Exec)
+color_12: '#FFBF40'    # Bright Yellow
+color_13: '#40BFFF'    # Bright Blue (Folder)
+color_14: '#BF40FF'    # Bright Magenta
+color_15: '#40FFBF'    # Bright Cyan
+color_16: '#EEEEEE'    # Bright White
+
+background: '#111111'  # Background
+foreground: '#E4E4E4'  # Foreground (Text)
+
+cursor: '#E50000'      # Cursor
